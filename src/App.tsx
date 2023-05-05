@@ -1,5 +1,14 @@
+import { ProductsProviders } from "./providers";
+import { Router } from "./routes";
+import { Global } from "./styles";
+
 function App() {
-  return <h1>Hello world</h1>;
+    return (
+        <ProductsProviders>
+            <Global />
+            <Router />
+        </ProductsProviders>
+    );
 }
 
 export default App;
