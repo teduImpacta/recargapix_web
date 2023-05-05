@@ -3,13 +3,16 @@ import { Button, Icon, PhoneField } from "../../components";
 import { Shimmer } from "../../styles";
 import * as S from "./styles";
 import { useCallback } from "react";
+import { useProducts } from "../../providers";
 
 export function RechargePage() {
+    const { navigateStep } = useProducts();
     const navigation = useNavigate();
 
     const goBack = useCallback(() => {
+        navigateStep();
         navigation("/");
-    }, [navigation]);
+    }, [navigation, navigateStep]);
 
     return (
         <S.Form onSubmit={() => {}}>
