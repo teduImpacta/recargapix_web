@@ -8,3 +8,22 @@ export type Product = {
     name: string;
     type: ProductTypes;
 };
+
+export type Carrier = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    isActive: boolean;
+    name: string;
+    ddd: string;
+    logo: string;
+    values: CarrierValue[];
+};
+
+export type CarrierValue = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    isActive: boolean;
+    value: number;
+};
