@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { ThemeConsumer, css } from "styled-components";
 import media from "styled-media-query";
 
 export const Wrapper = styled.div`
@@ -108,6 +108,7 @@ export const Product = styled.div`
     width: 9rem;
     height: 9rem;
     cursor: pointer;
+    color: #343a40;
 
     & > p {
         text-align: center;
@@ -115,5 +116,12 @@ export const Product = styled.div`
         line-height: 1.6rem;
         color: #343a40;
         font-weight: 700;
+    }
+
+    &:hover {
+        border-color: #35dde3;
+        & > p, & > svg {
+            color: #35dde3;
+        }
     }
 `;
