@@ -44,6 +44,7 @@ export const Button = ({
             color={getColorOrFaultByOutlined(color)}
             data-testid="button"
             loading={loading}
+            data-isDisabled={String(disabled)}
             {...(rest as any)}
         >
             <span>{children}</span>

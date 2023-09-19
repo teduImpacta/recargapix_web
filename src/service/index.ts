@@ -1,4 +1,4 @@
-import { Carrier, Product } from "../dtos";
+import { Carrier, Consultor, Product } from "../dtos";
 import { api } from "./api";
 
 export class Service {
@@ -12,5 +12,9 @@ export class Service {
                 ddd,
             },
         });
+    }
+
+    static async createConsultor(payload: Consultor) {
+        return await api.post("/consultor", payload);
     }
 }

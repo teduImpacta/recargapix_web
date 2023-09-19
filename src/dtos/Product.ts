@@ -27,3 +27,9 @@ export type CarrierValue = {
     isActive: boolean;
     value: number;
 };
+
+export type Consultor = {
+    phone: string;
+    number: string;
+    postalCode: string;
+};

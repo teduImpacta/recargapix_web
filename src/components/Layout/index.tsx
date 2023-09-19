@@ -22,6 +22,21 @@ export function Layout() {
         }
     }, []);
 
+    const navigateRoute = useCallback(
+        (type: ProductTypes) => {
+            switch (type) {
+                case ProductTypes.internet:
+                    navigateStep("consultor");
+                    navigate("consultor");
+                    break;
+                default:
+                    navigateStep("recharge");
+                    navigate("recharge");
+            }
+        },
+        [navigate, navigateStep]
+    );
+
     const renderProducts = useMemo(() => {
         return (
             step === "home" && (
@@ -39,8 +54,7 @@ export function Layout() {
                                 <S.Product
                                     key={`${name}_${type}`}
                                     onClick={() => {
-                                        navigateStep("recharge");
-                                        navigate("recharge");
+                                        navigateRoute(type);
                                     }}
                                 >
                                     {getIcon(type)}
@@ -52,7 +66,7 @@ export function Layout() {
                 </>
             )
         );
-    }, [loading, products, getIcon, navigate, step]);
+    }, [loading, products, getIcon, step, navigateRoute]);
 
     useEffect(() => {
         console.log(step);

@@ -15,8 +15,8 @@ type ProductsContextsProps = {
     loading: boolean;
     products: Product[] | undefined;
     getProducts: () => void;
-    step: "home" | "recharge";
-    navigateStep: (step?: "recharge" | "home") => void;
+    step: "home" | "recharge" | "consultor";
+    navigateStep: (step?: "recharge" | "home" | "consultor") => void;
 };
 
 const ProductContext = createContext<ProductsContextsProps>(
@@ -48,12 +48,15 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
         }
     );
 
-    const navigateStep = useCallback((s: "home" | "recharge" = "home") => {
-        setStep(() => {
-            stepStorage.set(s);
-            return s;
-        });
-    }, []);
+    const navigateStep = useCallback(
+        (s: "home" | "recharge" | "consultor" = "home") => {
+            setStep(() => {
+                stepStorage.set(s);
+                return s;
+            });
+        },
+        []
+    );
 
     const getProducts = useCallback(() => {
         setKey("recarga_pix_products");
