@@ -14,7 +14,7 @@ export function ConsultorPage() {
     const { navigateStep } = useProducts();
     const navigation = useNavigate();
     const [isDisabled, setDisabled] = useState(true);
-    const [isSuccess, setSuccess] = useState(true);
+    const [isSuccess, setSuccess] = useState(false);
 
     const { loading, request } = useFetch();
 
