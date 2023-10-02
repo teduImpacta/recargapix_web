@@ -29,6 +29,10 @@ export function Layout() {
                     navigateStep("consultor");
                     navigate("consultor");
                     break;
+                case ProductTypes.store:
+                    return [navigateStep, navigate].forEach((func) =>
+                        func("giftcard")
+                    );
                 default:
                     navigateStep("recharge");
                     navigate("recharge");

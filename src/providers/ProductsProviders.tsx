@@ -11,12 +11,14 @@ import { Service } from "../service";
 import { Product } from "../dtos";
 import { productsStorage, stepStorage } from "../config/storages";
 
+export type ProductTypes = "home" | "recharge" | "consultor" | "giftcard";
+
 type ProductsContextsProps = {
     loading: boolean;
     products: Product[] | undefined;
     getProducts: () => void;
-    step: "home" | "recharge" | "consultor";
-    navigateStep: (step?: "recharge" | "home" | "consultor") => void;
+    step: ProductTypes
+    navigateStep: (step?: ProductTypes) => void;
 };
 
 const ProductContext = createContext<ProductsContextsProps>(
@@ -49,7 +51,7 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
     );
 
     const navigateStep = useCallback(
-        (s: "home" | "recharge" | "consultor" = "home") => {
+        (s: ProductTypes = "home") => {
             setStep(() => {
                 stepStorage.set(s);
                 return s;

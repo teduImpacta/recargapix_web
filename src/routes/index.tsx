@@ -5,7 +5,7 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import { Layout } from "../components";
-import { ConsultorPage, HomePage, RechargePage } from "../pages";
+import { ConsultorPage, GiftCardPage, HomePage, RechargePage } from "../pages";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -13,6 +13,7 @@ const router = createBrowserRouter(
             <Route path="/" element={<HomePage />} />
             <Route path="/recharge" element={<RechargePage />} />
             <Route path="/consultor" element={<ConsultorPage />} />
+            <Route path="/giftcard" element={<GiftCardPage />} />
         </Route>
     )
 );

@@ -99,7 +99,14 @@ export function ConsultorPage() {
                             o número do WhatsApp informado.
                         </p>
                     </div>
-                    <Button large outlined onClick={() => setSuccess(false)}>
+                    <Button
+                        large
+                        outlined
+                        onClick={() => {
+                            setSuccess(false);
+                            setDisabled(true);
+                        }}
+                    >
                         Fechar
                     </Button>
                 </div>

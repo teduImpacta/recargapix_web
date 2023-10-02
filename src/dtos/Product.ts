@@ -1,4 +1,4 @@
-import { ProductTypes } from "../enums";
+import { GiftCardCategory, ProductTypes } from "../enums";
 
 export type Product = {
     id: string;
@@ -33,3 +33,9 @@ export type Consultor = {
     number: string;
     postalCode: string;
 };
+
+export type GiftCard = {
+    name: string
+    logo: string
+    category: GiftCardCategory
+}
