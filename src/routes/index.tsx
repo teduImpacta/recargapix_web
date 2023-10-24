@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { Layout } from "../components";
 import { ConsultorPage, GiftCardPage, HomePage, RechargePage } from "../pages";
+import { StorePage } from "../pages/store";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
             <Route path="/recharge" element={<RechargePage />} />
             <Route path="/consultor" element={<ConsultorPage />} />
             <Route path="/giftcard" element={<GiftCardPage />} />
+            <Route path="/store/:id" element={<StorePage />} />
         </Route>
     )
 );

@@ -1,4 +1,4 @@
-import { Carrier, Consultor, GiftCard, Product } from "../dtos";
+import { Carrier, Consultor, GiftCard, GiftCardValue, Product } from "../dtos";
 import { api } from "./api";
 
 type Res<D> = {data: D}
@@ -21,5 +21,9 @@ export class Service {
 
     static async getGiftCards() {
         return api.get<Res<GiftCard[]>>('/giftcards')
+    }
+
+    static async getGiftCardValue(id: string) {
+        return api.get<Res<GiftCardValue[]>>(`/giftcards/${id}`)
     }
 }

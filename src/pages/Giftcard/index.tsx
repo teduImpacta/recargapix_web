@@ -6,19 +6,26 @@ import swr from "swr";
 import { Button } from "../../components";
 import { useProducts } from "../../providers";
 import { useNavigate } from "react-router-dom";
+import { GiftCard } from "../../dtos";
 
 export function GiftCardPage() {
     const [isOpen, setIsOpen] = useState("Todos");
 
-    const { navigateStep } = useProducts();
+    const { navigateStep, handleGiftcard } = useProducts();
     const navigation = useNavigate();
 
-    const { data, isLoading } = swr("giftcards", async () => {
-        const {
-            data: { data },
-        } = await Service.getGiftCards();
-        return data;
-    });
+    const { data, isLoading } = swr(
+        "giftcards",
+        async () => {
+            const {
+                data: { data },
+            } = await Service.getGiftCards();
+            return data;
+        },
+        {
+            revalidateOnFocus: false,
+        }
+    );
 
     const goBack = useCallback(() => {
         navigateStep();
@@ -39,6 +46,15 @@ export function GiftCardPage() {
             }, []),
         ],
         []
+    );
+
+    const submit = useCallback(
+        (giftcard: GiftCard) => {
+            handleGiftcard(giftcard);
+            navigateStep("store");
+            navigation(`/store/${giftcard.id}`);
+        },
+        [handleGiftcard, navigateStep, navigation]
     );
 
     return (
@@ -66,7 +82,12 @@ export function GiftCardPage() {
                             return item.category === isOpen;
                         })
                         .map((item) => (
-                            <S.Product>
+                            <S.Product
+                                key={item.id}
+                                onClick={() => {
+                                    submit(item);
+                                }}
+                            >
                                 <img src={item.logo} alt={item.name} />
                                 <p>{item.name}</p>
                             </S.Product>

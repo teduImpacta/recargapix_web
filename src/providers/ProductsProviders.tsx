@@ -8,17 +8,19 @@ import {
 } from "react";
 import swr from "swr";
 import { Service } from "../service";
-import { Product } from "../dtos";
+import { GiftCard, Product } from "../dtos";
 import { productsStorage, stepStorage } from "../config/storages";
 
-export type ProductTypes = "home" | "recharge" | "consultor" | "giftcard";
+export type ProductTypes = "home" | "recharge" | "consultor" | "giftcard" | 'store' | 'payment';
 
 type ProductsContextsProps = {
     loading: boolean;
     products: Product[] | undefined;
     getProducts: () => void;
-    step: ProductTypes
+    step: ProductTypes;
     navigateStep: (step?: ProductTypes) => void;
+    giftcard: GiftCard;
+    handleGiftcard: (giftcard: GiftCard) => void;
 };
 
 const ProductContext = createContext<ProductsContextsProps>(
@@ -33,6 +35,7 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
     const [loading, setLoading] = useState(false);
     const [key, setKey] = useState<string | null>(null);
     const [step, setStep] = useState(() => stepStorage.get("home"));
+    const [giftcard, setGiftcard] = useState({} as GiftCard);
 
     const { data } = swr(
         key,
@@ -50,15 +53,12 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
         }
     );
 
-    const navigateStep = useCallback(
-        (s: ProductTypes = "home") => {
-            setStep(() => {
-                stepStorage.set(s);
-                return s;
-            });
-        },
-        []
-    );
+    const navigateStep = useCallback((s: ProductTypes = "home") => {
+        setStep(() => {
+            stepStorage.set(s);
+            return s;
+        });
+    }, []);
 
     const getProducts = useCallback(() => {
         setKey("recarga_pix_products");
@@ -68,6 +68,10 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
         return data ?? productsStorage.get([]);
     }, [data]);
 
+    const handleGiftcard = useCallback((gf: GiftCard) => {
+        setGiftcard(gf);
+    }, []);
+
     return (
         <ProductContext.Provider
             value={{
@@ -76,6 +80,8 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
                 getProducts,
                 step,
                 navigateStep,
+                giftcard,
+                handleGiftcard,
             }}
         >
             {children}

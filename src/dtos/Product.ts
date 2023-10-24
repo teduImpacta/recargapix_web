@@ -35,7 +35,17 @@ export type Consultor = {
 };
 
 export type GiftCard = {
-    name: string
-    logo: string
-    category: GiftCardCategory
-}
+    name: string;
+    logo: string;
+    category: GiftCardCategory;
+    id: string;
+};
+
+export type GiftCardValue = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    isActive: boolean;
+    value: number;
+    description: string;
+};

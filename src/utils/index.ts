@@ -28,3 +28,15 @@ export function createStorage<T>(key: string, str = sessionStorage) {
         },
     };
 }
+
+export function formatCurrency(value: unknown) {
+    return Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(Number(value))
+  }
+
+
+  export function isArrayFull(value: unknown) {
+    return Array.isArray(value) && value.length > 0
+  }
