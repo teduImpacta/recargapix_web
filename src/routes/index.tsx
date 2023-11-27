@@ -5,7 +5,14 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import { Layout } from "../components";
-import { ConsultorPage, GiftCardPage, HomePage, RechargePage } from "../pages";
+import {
+    ConsultorPage,
+    GiftCardPage,
+    HomePage,
+    PaymentPage,
+    RechargePage,
+    StatementPage,
+} from "../pages";
 import { StorePage } from "../pages/store";
 
 const router = createBrowserRouter(
@@ -16,6 +23,8 @@ const router = createBrowserRouter(
             <Route path="/consultor" element={<ConsultorPage />} />
             <Route path="/giftcard" element={<GiftCardPage />} />
             <Route path="/store/:id" element={<StorePage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/statement" element={<StatementPage />} />
         </Route>
     )
 );

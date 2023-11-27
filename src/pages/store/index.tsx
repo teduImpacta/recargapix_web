@@ -12,7 +12,7 @@ import * as S from "./styles";
 import { Service } from "../../service";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { formatCurrency, isArrayFull } from "../../utils";
+import { formatCurrency, isArrayFull, phoneWithDDDMask } from "../../utils";
 import { GiftCardValue } from "../../dtos";
 import { FormHandles } from "@unform/core";
 
@@ -26,7 +26,8 @@ export function StorePage() {
     const [selectedValue, setSelectedValue] = useState({} as GiftCardValue);
 
     const { id } = useParams<Params>();
-    const { giftcard, navigateStep } = useProducts();
+    const { giftcard, navigateStep, handleGiftcard, handleContact } =
+        useProducts();
     const navigation = useNavigate();
 
     const { data: values } = useSWR(
@@ -47,9 +48,29 @@ export function StorePage() {
             navigation("/giftcard");
             return;
         }
+        const data: any = formRef.current?.getData();
+
+        handleContact({
+            name: data.cellphone ? "Celular" : "E-mail",
+            value: data.cellphone
+                ? phoneWithDDDMask(data.cellphone)
+                : data.email,
+        });
+
         navigateStep("payment");
         navigation("/payment");
-    }, [navigation, navigateStep, selectedValue]);
+    }, [navigation, navigateStep, selectedValue, handleContact, formRef]);
+
+    const handleSelectedGiftcardValue = useCallback(
+        (value: GiftCardValue) => {
+            setSelectedValue(value);
+            handleGiftcard({
+                ...giftcard,
+                value: value.value,
+            });
+        },
+        [giftcard, handleGiftcard]
+    );
 
     return (
         <S.Wrapper
@@ -73,7 +94,7 @@ export function StorePage() {
                             <S.Chip
                                 key={value.id}
                                 onClick={() => {
-                                    setSelectedValue(value);
+                                    handleSelectedGiftcardValue(value);
                                 }}
                             >
                                 <Typography bold as="small" color="gray8">
@@ -112,8 +133,8 @@ export function StorePage() {
                             }}
                         />
                         <CheckboxField
-                            name="E-mail"
-                            label="email"
+                            name="email"
+                            label="E-mail"
                             onChange={(ev) => {
                                 setIsPhone(!ev.target.checked);
                                 formRef.current?.setFieldValue(

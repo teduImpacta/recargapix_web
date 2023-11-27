@@ -17,7 +17,7 @@ export const buttonModifiers = {
         background-color: #3fd65f;
         border-color: #3fd65f;
 
-        & > p {
+        span {
             color: #f9fafb;
         }
     `,
@@ -70,8 +70,8 @@ export const Wrapper = styled.button<WrapperProps>`
         ${buttonModifiers.base(color!)};
         ${!!outlined && buttonModifiers.outlined()};
         ${!!large && buttonModifiers.large()};
-        ${!!success && buttonModifiers.success()};
         ${!!text && buttonModifiers.text()};
+        ${!!success && buttonModifiers.success()};
         ${!!disabled && buttonModifiers.disabled()};
     `}
 `;

@@ -11,7 +11,19 @@ import { Service } from "../service";
 import { GiftCard, Product } from "../dtos";
 import { productsStorage, stepStorage } from "../config/storages";
 
-export type ProductTypes = "home" | "recharge" | "consultor" | "giftcard" | 'store' | 'payment';
+type Contact = {
+    name: string;
+    value: string;
+};
+
+export type ProductTypes =
+    | "home"
+    | "recharge"
+    | "consultor"
+    | "giftcard"
+    | "store"
+    | "payment"
+    | "statement";
 
 type ProductsContextsProps = {
     loading: boolean;
@@ -19,8 +31,10 @@ type ProductsContextsProps = {
     getProducts: () => void;
     step: ProductTypes;
     navigateStep: (step?: ProductTypes) => void;
-    giftcard: GiftCard;
-    handleGiftcard: (giftcard: GiftCard) => void;
+    giftcard: GF;
+    handleGiftcard: (giftcard: GF) => void;
+    contact: Contact;
+    handleContact: (contact: Contact) => void;
 };
 
 const ProductContext = createContext<ProductsContextsProps>(
@@ -31,11 +45,16 @@ type ProductsProvidersProps = {
     children?: ReactNode;
 };
 
+type GF = GiftCard & {
+    value: string | number;
+};
+
 export function ProductsProviders({ children }: ProductsProvidersProps) {
     const [loading, setLoading] = useState(false);
     const [key, setKey] = useState<string | null>(null);
     const [step, setStep] = useState(() => stepStorage.get("home"));
-    const [giftcard, setGiftcard] = useState({} as GiftCard);
+    const [giftcard, setGiftcard] = useState({} as GF);
+    const [contact, setContact] = useState({} as Contact);
 
     const { data } = swr(
         key,
@@ -68,7 +87,7 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
         return data ?? productsStorage.get([]);
     }, [data]);
 
-    const handleGiftcard = useCallback((gf: GiftCard) => {
+    const handleGiftcard = useCallback((gf: GF) => {
         setGiftcard(gf);
     }, []);
 
@@ -82,6 +101,8 @@ export function ProductsProviders({ children }: ProductsProvidersProps) {
                 navigateStep,
                 giftcard,
                 handleGiftcard,
+                contact,
+                handleContact: setContact,
             }}
         >
             {children}
